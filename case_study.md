@@ -20,31 +20,53 @@ Which genres contribute the most to global sales?
 
 SQL:
 ```sql
-
+SELECT Genre, SUM(Global_Sales)
+FROM Game
+GROUP BY Genre
+ORDER BY SUM(Global_Sales) DESC;
 ```
 Findings:
 ```findings
-
+Action	1751.1799999999691
+Sports	1330.929999999988
+Shooter	1037.3699999999901
+Role-Playing	927.3699999999941
+Platform	831.3699999999974
 ```
 Which platforms generate the highest global sales?
 
 SQL:
 ```sql
-
+SELECT
+  Platform,
+  SUM(Global_Sales) AS total_global_sales
+FROM main.Game
+GROUP BY Platform
+ORDER BY total_global_sales DESC;
 ```
 Findings:
 ```findings
-
+PS2	    1255.6399999999871
+X360	979.9599999999996
+PS3	    957.8399999999987
+Wii	    926.7099999999971
+DS	    822.4899999999874
+PS	    730.659999999997
 ```
 Which publishers are the most successful in terms of global sales?
 
 SQL:
 ```sql
-
+select sum(global_sales), publisher
+from vgsales.game_data 
+group by publisher  
+order by 1 desc;
 ```
 Findings:
 ```findings
-
+1786.5600055344403
+Electronic Arts 1110.3199984170496
+Activision  727.4599985554814
 ```
 How does success vary across regions (North America, Europe, Japan, Others)?
 
@@ -70,11 +92,30 @@ Which platforms are most successful for specific genres?
 
 SQL:
 ```sql
-
+WITH genre_platform AS (
+  SELECT
+    Genre,
+    Platform,
+    SUM(Global_Sales) AS total_global_sales,
+    DENSE_RANK() OVER (
+      PARTITION BY Genre
+      ORDER BY SUM(Global_Sales) DESC
+    ) AS rnk
+  FROM main.Game
+  GROUP BY Genre, Platform
+)
+SELECT Genre, Platform, total_global_sales, rnk
+FROM genre_platform
+WHERE rnk <= 3
+ORDER BY Genre, rnk, total_global_sales DESC;
 ```
 Findings:
 ```findings
-
+Action	PS3	307.8799999999995	1
+Action	PS2	272.7599999999997	2
+Action	X360	242.67000000000024	3
+Adventure	DS	47.290000000000035	1
+Adventure	PS3	22.900000000000006	2
 ```
 ## Deliverables:
 - SQL Queries: Provide all the SQL queries you used to answer the business questions.
