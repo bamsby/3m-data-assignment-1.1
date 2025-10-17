@@ -27,6 +27,7 @@ ORDER BY SUM(Global_Sales) DESC;
 ```
 Findings:
 ```findings
+Genre	sum(Global_Sales)
 Action	1751.1799999999691
 Sports	1330.929999999988
 Shooter	1037.3699999999901
