@@ -64,6 +64,7 @@ order by 1 desc;
 ```
 Findings:
 ```findings
+sum(global_sales)	Publisher
 1786.5599999999981	Nintendo
 1110.3199999999915	Electronic Arts
 727.4599999999983	Activision
