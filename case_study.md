@@ -58,15 +58,17 @@ Which publishers are the most successful in terms of global sales?
 SQL:
 ```sql
 select sum(global_sales), publisher
-from vgsales.game_data 
+from main.Game
 group by publisher  
 order by 1 desc;
 ```
 Findings:
 ```findings
-1786.5600055344403
-Electronic Arts 1110.3199984170496
-Activision  727.4599985554814
+1786.5599999999981	Nintendo
+1110.3199999999915	Electronic Arts
+727.4599999999983	Activision
+607.4999999999989	Sony Computer Entertainment
+474.71999999999935	Ubisoft
 ```
 How does success vary across regions (North America, Europe, Japan, Others)?
 
