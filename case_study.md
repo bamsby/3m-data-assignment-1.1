@@ -72,21 +72,45 @@ How does success vary across regions (North America, Europe, Japan, Others)?
 
 SQL:
 ```sql
-
+SELECT
+  Platform,
+  SUM(NA_Sales) AS total_NA_sales,
+  SUM(EU_Sales) AS total_EU_sales,
+  SUM(JP_Sales) AS total_JP_sales,
+  SUM(Other_Sales) AS total_Other_sales,
+  SUM(Global_Sales) AS total_global_sales
+FROM main.Game
+GROUP BY Platform
+ORDER BY total_global_sales DESC;
 ```
 Findings:
 ```findings
-
+PS2	583.8399999999925	339.2899999999957	139.20000000000064	193.44000000000062	1255.6399999999871
+X360	601.0499999999992	280.5799999999964	12.429999999999923	85.54000000000137	979.9599999999996
+PS3	392.2599999999998	343.70999999999805	79.99000000000005	141.92999999999992	957.8399999999987
+Wii	507.7099999999991	268.3799999999979	69.35000000000001	80.6100000000016	926.7099999999971
+DS	390.7099999999977	194.64999999999938	175.57000000000048	60.52999999999964	822.4899999999874
 ```
 What are the trends over time in game sales by genre and platform?
 
 SQL:
 ```sql
-
+SELECT
+  Year,
+  Genre,
+  SUM(Global_Sales) AS total_global_sales
+FROM main.Game
+WHERE Year IS NOT NULL
+GROUP BY Year, Genre
+ORDER BY Year, total_global_sales DESC;
 ```
 Findings:
 ```findings
-
+1980	Shooter	7.069999999999999
+1980	Misc	2.71
+1980	Fighting	0.77
+1980	Sports	0.49
+1980	Action	0.34
 ```
 Which platforms are most successful for specific genres?
 
